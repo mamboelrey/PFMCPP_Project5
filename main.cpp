@@ -52,6 +52,7 @@ If you need inspiration for what to write, take a look at previously approved st
  UDT 1:
  */
 #include <iostream>
+#include <array>
 
 struct Car
 {
@@ -64,18 +65,13 @@ struct Car
 
     // Constructor
     Car();
-
     // Destructor
     ~Car();
 
     // 3 Member Functions
     float calculateTrueSellValue(std::string make, float sellingPrice, int totalMilesOnVehicle = 10000);
-
     int calculateMilesUntilOilChange(int fuelType = 0, int totalMilesOnVehicle = 10000);
-    
     bool predictRaceWinProbability(std::string make, int maxSpeed = 150);
-
-
 
     struct Vehicle
     {
@@ -88,17 +84,13 @@ struct Car
 
         // 3 member functions
         void renovateVehicle(std::string vin, int maxSpeed = 150, bool turboCharged = false);
-
         float calculateHpToTheWheel(float engineDisplacement, bool turboCharged = true, int maxSpeed = 200);
-
         void resetEngineControlModule(std::string vin, bool vehicleIsImmobolized = true);
-        
+
         // Constructor
         Vehicle();
-
         //Destructor
         ~Vehicle();
-
     };
 };
 
@@ -148,7 +140,6 @@ bool Car::predictRaceWinProbability(std::string make, int maxSpeed)
 
     std::cout << "You will most likely lose in a race" << std::endl;
     return false;
-    
 }
 
 Car::Vehicle::Vehicle():
@@ -177,19 +168,12 @@ void Car::Vehicle::renovateVehicle(std::string vin, int maxSpeed, bool turboChar
 
 float Car::Vehicle::calculateHpToTheWheel(float engineDisplacement, bool turboCharged, int maxSpeed)
 {
-    float horsepower;
-
     if(turboCharged)
     {
-        horsepower = ((engineDisplacement * 100) + 100 + maxSpeed);
+        return((engineDisplacement * 100) + 100 + maxSpeed);
     }
 
-    else
-    {
-        horsepower = ((engineDisplacement * 100) + maxSpeed);
-    }
-
-    return horsepower;
+    return ((engineDisplacement * 100) + maxSpeed);
 }
 
 void Car::Vehicle::resetEngineControlModule(std::string vin, bool vehicleIsImmobolized)
@@ -198,6 +182,7 @@ void Car::Vehicle::resetEngineControlModule(std::string vin, bool vehicleIsImmob
     {
         std::cout << "Reset module exists and starting ECM reset" << std::endl;
     }
+
     std::cout << "Reset module does not exist" << std::endl;
 }
 
@@ -212,15 +197,11 @@ struct SoccerTeam
     std::string starPlayer;
 
     void transferPlayerToTeam(std::string transferToTeam, std::string transferFromTeam);
-
     double calculateWinProbability(float stoppageTime, int numberOfGoalsCurrentGame);
-
     int calculateTotalSeasonGoals(int numberOfGoalsCurrentGame, int numberOfGoalsUntilNow);
 
     SoccerTeam();
-
     ~SoccerTeam();
-
 };
 
 SoccerTeam::SoccerTeam():
@@ -230,6 +211,7 @@ starPlayer("Neymar")
 {
     std::cout << "SoccerTeam constructor called" << std::endl;
 };
+
 SoccerTeam::~SoccerTeam()
 {
     std::cout << "SoccerTeam destructor called" << std::endl;
@@ -238,9 +220,7 @@ SoccerTeam::~SoccerTeam()
 void SoccerTeam::transferPlayerToTeam(std::string transferToTeam, std::string transferFromTeam)
 {
     std::cout << "Transferring from team " << transferFromTeam << " to team " << transferToTeam << std::endl;
-
 }
-
 
 double SoccerTeam::calculateWinProbability(float stoppageTime, int numberOfGoalsCurrentGame)
 {
@@ -250,19 +230,15 @@ double SoccerTeam::calculateWinProbability(float stoppageTime, int numberOfGoals
         return 0.6;
     }
 
-    else
-    {
-        std::cout << "Win probability less than 50%" << std::endl;
-        return 0.4;
-    }
-
+    std::cout << "Win probability less than 50%" << std::endl;
+    return 0.4;
 }
-
 
 int SoccerTeam::calculateTotalSeasonGoals(int numberOfGoalsCurrentGame, int numberOfGoalsUntilNow)
 {
     return (numberOfGoalsCurrentGame + numberOfGoalsUntilNow);
 }
+
 /*
  UDT 3:
  */
@@ -277,10 +253,8 @@ struct DogShow
     float calculateCostToEnterDogShow(int weightInPounds = 30, std::string furColor = "brown", float entranceFee = 1000.54f);
     void predictWinProbabilityDogShow(std::string breedName, int weightInPounds, std::string furColor);
     float calculateTotalEarningsDogShow(float totalWinnings, float entranceFee = 2000.0f); 
-
     DogShow();
     ~DogShow();
-
 
     struct Animal
     {
@@ -297,9 +271,6 @@ struct DogShow
         Animal();
         ~Animal();
     };
-
-    
-
 };
 
 DogShow::DogShow():
@@ -319,6 +290,7 @@ DogShow::~DogShow()
 float DogShow::calculateCostToEnterDogShow(int weightInPounds, std::string furColor, float entranceFee)
 {
     int totalCost = entranceFee;
+
     if(weightInPounds > 50)
     {
         totalCost += 50.45;
@@ -327,24 +299,20 @@ float DogShow::calculateCostToEnterDogShow(int weightInPounds, std::string furCo
     {
         totalCost+= 75.63;
     }
-
     else
     {
         std::cout << "No additional costs" << std::endl;
     }
 
     return totalCost;
-
 }
-
 
 void DogShow::predictWinProbabilityDogShow(std::string breedName, int weightInPounds, std::string furColor)
 {
     float winProbability  = 0.0f;
+    std::array<std::string, 5> breeds = {"Pitbull", "German Shepherd", "Lab", "Great Dane", "Mastiff"};
 
-    std::string breeds[5] = {"Pitbull", "German Shepherd", "Lab", "Great Dane", "Mastiff"};
-
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; ++i)
     {
         if(breedName == breeds[i])
         {
@@ -359,9 +327,7 @@ void DogShow::predictWinProbabilityDogShow(std::string breedName, int weightInPo
     }
 
     winProbability = (winProbability+ weightInPounds) / 100;
-
     std::cout << winProbability << "chance of win probability" << std::endl;
-
 }
 
 float DogShow::calculateTotalEarningsDogShow(float totalWinnings, float entranceFee)
@@ -412,7 +378,6 @@ bool DogShow::Animal::determineAnimalHealth(std::string animalType, int ageOfAni
     return true;
 }
 
-
 /*
  new UDT 4:
  */
@@ -425,7 +390,6 @@ struct GermanShepherd
 
     GermanShepherd();
     ~GermanShepherd();
-
 };
 
 GermanShepherd::GermanShepherd()
@@ -437,12 +401,12 @@ GermanShepherd::~GermanShepherd()
     std::cout << "German Sheperd destructor" << std::endl;
 }
 
-void calculateGermanShepherdEarnings()
+void GermanShepherd::calculateGermanShepherdEarnings()
 {
-
+    
 }
 
-void finishObstacleCourse()
+void GermanShepherd::finishObstacleCourse()
 {
 
 }
@@ -460,7 +424,6 @@ struct BayernMunich
     
     BayernMunich();
     ~BayernMunich();
-
 };
 
 BayernMunich::BayernMunich()
@@ -473,12 +436,12 @@ BayernMunich::~BayernMunich()
 
 }
 
-void performFreeKickFormation()
+void BayernMunich::performFreeKickFormation()
 {
 
 }
 
-void celebrateGoal()
+void BayernMunich::celebrateGoal()
 {
 
 }
@@ -497,31 +460,31 @@ void celebrateGoal()
 #include <iostream>
 int main()
 {
-    struct Car myCar;
+    Car myCar;
     myCar.predictRaceWinProbability("Ford");
     myCar.calculateTrueSellValue("Dodge", 6000.75, 100000);
     myCar.calculateMilesUntilOilChange(1, 67089);
 
-    struct Car::Vehicle myVehicle;
+    Car::Vehicle myVehicle;
     myVehicle.renovateVehicle("1F34JFKASJ123122", 200, true);
     float horsepower = myVehicle.calculateHpToTheWheel(5.7);
     std::cout << horsepower << " HP" << std::endl;
     myVehicle.resetEngineControlModule("1F34JFKASJ123122", false);
 
-    struct SoccerTeam mySoccerTeam;
+    SoccerTeam mySoccerTeam;
     mySoccerTeam.transferPlayerToTeam("PSG", "Barcelona");
     double winProbability = mySoccerTeam.calculateWinProbability(1.56, 4);
 
     std::cout << winProbability << " Win probability" << std::endl;
     mySoccerTeam.calculateTotalSeasonGoals(4, 130);
 
-    struct DogShow usDogShow;
+    DogShow usDogShow;
 
-    struct DogShow::Animal animal;
+    DogShow::Animal animal;
 
-    struct GermanShepherd germanShepherd;
+    GermanShepherd germanShepherd;
 
-    struct BayernMunich bayernMunich;
+    BayernMunich bayernMunich;
     
     std::cout << "good to go!" << std::endl;
 }
