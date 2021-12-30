@@ -162,7 +162,7 @@ Car::Vehicle::~Vehicle()
 
 void Car::Vehicle::renovateVehicle(std::string vehicleVin, int maxSpeedVehicle, bool isTurboCharged)
 {
-    if((vehicleVin[9] < 'J') && (maxSpeedVehicle < 155) && !isTurboCharged)
+    if((vehicleVin.size() >= 10) && (vehicleVin[9] < 'J') && (maxSpeedVehicle < 155) && !isTurboCharged)
     {
         std::cout << "Renovate vehicle" << std::endl;
         return;
@@ -183,7 +183,7 @@ float Car::Vehicle::calculateHpToTheWheel(float engDisplacement, bool isTurboCha
 
 void Car::Vehicle::resetEngineControlModule(std::string vehicleVin, bool vehicleIsImmobolized)
 {
-    if((vehicleVin.size() > 10) && (vehicleVin[9] > 'J') && vehicleIsImmobolized)
+    if((vehicleVin.size() >= 10) && (vehicleVin[9] > 'J') && vehicleIsImmobolized)
     {
         std::cout << "Reset module exists and starting ECM reset" << std::endl;
         return;
