@@ -559,73 +559,73 @@ void BayernMunich::printGermanTeam()
 int main()
 {
     Car myBrothersCar;
-    bool brotherWinProbability = myBrothersCar.predictRaceWinProbability("Ford", 250);
+    auto brotherWinProbability = myBrothersCar.predictRaceWinProbability("Ford", 250);
     std::cout << "Brother win probability " << brotherWinProbability << std::endl;
     myBrothersCar.printPredictRaceWinProbability();
-    float brothersCarSellValue = myBrothersCar.calculateTrueSellValue("Ford", 6000.75f, 100000);
+    auto brothersCarSellValue = myBrothersCar.calculateTrueSellValue("Ford", 6000.75f, 100000);
     std::cout << "True sell value of brothers car: $" << brothersCarSellValue << std::endl; 
     myBrothersCar.printCalculateTrueSellValue();
     myBrothersCar.calculateMilesUntilOilChange(1, 10000);
 
     Car mySistersCar;
-    bool sisterWinProbability = mySistersCar.predictRaceWinProbability("Dodge");
+    auto sisterWinProbability = mySistersCar.predictRaceWinProbability("Dodge");
     std::cout << "Sister win probability " << sisterWinProbability << std::endl;
-    float sistersCarSellValue = mySistersCar.calculateTrueSellValue("Dodge", 5000.75f, 10000);
+    auto sistersCarSellValue = mySistersCar.calculateTrueSellValue("Dodge", 5000.75f, 10000);
     std::cout << "True sell value of sisters car: $" << sistersCarSellValue << std::endl; 
     mySistersCar.calculateMilesUntilOilChange(2, 6734);
 
     Car::Vehicle myBrothersVehicle;
     myBrothersVehicle.renovateVehicle("1G5JFKASJ123122", 100, false);
-    float brotherVehicleHorsepower = myBrothersVehicle.calculateHpToTheWheel(4.1f);
+    auto brotherVehicleHorsepower = myBrothersVehicle.calculateHpToTheWheel(4.1f);
     std::cout << brotherVehicleHorsepower << " HP" << std::endl;
     myBrothersVehicle.printCalculateHpToTheWheel();
     myBrothersVehicle.resetEngineControlModule("G5JFKASJ1K3122", true);
 
     Car::Vehicle mySistersVehicle;
     mySistersVehicle.renovateVehicle("1F34JFKASJ123122", 200, true);
-    float sisterVehicleHorsepower = mySistersVehicle.calculateHpToTheWheel(5.7f);
+    auto sisterVehicleHorsepower = mySistersVehicle.calculateHpToTheWheel(5.7f);
     std::cout << sisterVehicleHorsepower << " HP" << std::endl;
     mySistersVehicle.resetEngineControlModule("1F34JFKASJ123122", false);
 
     SoccerTeam spanishSoccerTeam;
     spanishSoccerTeam.transferPlayerToTeam("PSG", "Barcelona");
-    double spanishTeamWinProbability = spanishSoccerTeam.calculateWinProbability(4.56, 1);
+    auto spanishTeamWinProbability = spanishSoccerTeam.calculateWinProbability(4.56, 1);
     std::cout << spanishTeamWinProbability << " Win probability" << std::endl;
     spanishSoccerTeam.printCalculateWinProbability();
     spanishSoccerTeam.calculateTotalSeasonGoals(4, 130);
 
     SoccerTeam frenchSoccerTeam;
     frenchSoccerTeam.transferPlayerToTeam("Barcelona", "PSG");
-    double frenchTeamWinProbability = frenchSoccerTeam.calculateWinProbability(1.41, 3);
+    auto frenchTeamWinProbability = frenchSoccerTeam.calculateWinProbability(1.41, 3);
     std::cout << frenchTeamWinProbability << " Win probability" << std::endl;
     spanishSoccerTeam.calculateTotalSeasonGoals(5, 210);
 
     DogShow previousUSDogShow;
-    float previousDogShowCost = previousUSDogShow.calculateCostToEnterDogShow();
+    auto previousDogShowCost = previousUSDogShow.calculateCostToEnterDogShow();
     std::cout << "Previous US dog show cost " << previousDogShowCost << std::endl;
     previousUSDogShow.printCalculateCostToEnterDogShow();
     previousUSDogShow.predictWinProbabilityDogShow("Lab", 80, "brown");
-    float previousDogShowEarnings = previousUSDogShow.calculateTotalEarningsDogShow(1000.37f);
+    auto previousDogShowEarnings = previousUSDogShow.calculateTotalEarningsDogShow(1000.37f);
     std::cout << "Previous US dog show earnings " << previousDogShowEarnings << std::endl;
     previousUSDogShow.printCalculateTotalEarningsDogShow();
 
     DogShow currentUSDogShow;
-    float currentDogShowCost = currentUSDogShow.calculateCostToEnterDogShow(200);
+    auto currentDogShowCost = currentUSDogShow.calculateCostToEnterDogShow(200);
     std::cout << "Current US dog show cost " << currentDogShowCost << std::endl;
     currentUSDogShow.predictWinProbabilityDogShow("Mastiff", 100, "white");
-    float currentDogShowEarnings = currentUSDogShow.calculateTotalEarningsDogShow(2001.55f);
+    auto currentDogShowEarnings = currentUSDogShow.calculateTotalEarningsDogShow(2001.55f);
     std::cout << "Current US dog show earnings " << currentDogShowEarnings << std::endl;
 
     DogShow::Animal cow;
     cow.determineAnimalShow("cow", "England");
-    int cowMaxLandSpeed = cow.calculateMaxLandSpeed();
+    auto cowMaxLandSpeed = cow.calculateMaxLandSpeed();
     std::cout << "Max land speed is " << cowMaxLandSpeed << std::endl;
     cow.printCalculateMaxLandSpeed();
     cow.determineAnimalHealth("cow");
 
     DogShow::Animal horse;
     horse.determineAnimalShow("horse", "USA");
-    int horseMaxLandSpeed = horse.calculateMaxLandSpeed();
+    auto horseMaxLandSpeed = horse.calculateMaxLandSpeed();
     std::cout << "Max land speed is " << horseMaxLandSpeed << std::endl;
     horse.determineAnimalHealth("horse");
 
