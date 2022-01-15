@@ -152,8 +152,7 @@ void Car::calculateMilesUntilOilChange(int fuelTypeCar, int totalMiles)
         return;
     }
 
-    std::cout << "Car needs oil change in " << milesUntilOilChange << " miles"<< std::endl;
-    return;                                     
+    std::cout << "Car needs oil change in " << milesUntilOilChange << " miles"<< std::endl;                                  
 }
     
 bool Car::predictRaceWinProbability(std::string carMake, int maxSpeedCar)
