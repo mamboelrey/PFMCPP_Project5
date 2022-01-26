@@ -22,7 +22,7 @@ Create a branch named Part3
 #if false
  Axe axe;
  std::cout << "axe sharpness: " << axe.sharpness << "\n";
- #endif
+#endif
  /*
     you would update that to use your wrappers:
     
@@ -77,6 +77,7 @@ void someMemberFunction(const Axe& axe);
 #include <iostream>
 #include <array>
 #include <cmath>
+#include "LeakedObjectDetector.h"
 
 struct Car
 {
@@ -99,7 +100,6 @@ struct Car
     void printCalculateTrueSellValue();
     void printPredictRaceWinProbability();
 
-
     struct Vehicle
     {
         // 5 member variable
@@ -118,7 +118,10 @@ struct Car
         Vehicle();
         //Destructor
         ~Vehicle();
+
+        JUCE_LEAK_DETECTOR(Vehicle)
     };
+    JUCE_LEAK_DETECTOR(Car)
 };
 
 Car::Car():
@@ -232,6 +235,16 @@ void Car::Vehicle::printCalculateHpToTheWheel()
     std::cout << "Car calculateHpToTheWheel(): " << this->calculateHpToTheWheel(4.1f) << std::endl;
 }
 
+struct CarWrapper
+{
+    CarWrapper(Car* ptr): car(ptr){}
+    ~CarWrapper()
+    {
+        delete car;
+    }
+
+    Car* car = nullptr;
+};
 
 /*
  UDT 2:
@@ -252,6 +265,7 @@ struct SoccerTeam
 
     SoccerTeam();
     ~SoccerTeam();
+    JUCE_LEAK_DETECTOR(SoccerTeam)
 };
 
 SoccerTeam::SoccerTeam():
@@ -299,6 +313,16 @@ void SoccerTeam::printCalculateTotalSeasonGoals()
     std::cout << "SoccerTeam calculateTotalSeasonGoals(): " << this->calculateTotalSeasonGoals(4, 130) << std::endl;
 }
 
+struct SoccerTeamWrapper
+{
+    SoccerTeamWrapper(SoccerTeam* ptr): soccerTeam(ptr){}
+    ~SoccerTeamWrapper()
+    {
+        delete soccerTeam;
+    }
+
+    SoccerTeam* soccerTeam = nullptr;
+};
 /*
  UDT 3:
  */
@@ -334,7 +358,11 @@ struct DogShow
 
         Animal();
         ~Animal();
+
+        JUCE_LEAK_DETECTOR(Animal)
     };
+
+    JUCE_LEAK_DETECTOR(DogShow)
 };
 
 DogShow::DogShow():
@@ -453,6 +481,17 @@ void DogShow::Animal::printCalculateMaxLandSpeed()
 {
     std::cout << "Animal calculateMaxLandSpeed " << this->calculateMaxLandSpeed(45) << std::endl;
 }
+
+struct DogShowWrapper
+{
+    DogShowWrapper(DogShow* ptr): dogShow(ptr){}
+    ~DogShowWrapper()
+    {
+        delete dogShow;
+    }
+
+    DogShow* dogShow = nullptr;
+};
 /*
  new UDT 4:
  */
@@ -466,6 +505,7 @@ struct GermanShepherd
 
     GermanShepherd();
     ~GermanShepherd();
+    JUCE_LEAK_DETECTOR(GermanShepherd)
 };
 
 GermanShepherd::GermanShepherd()
@@ -498,6 +538,16 @@ void GermanShepherd::printDanielsDog()
     std::cout << "GermanShepherd danielsDog()" << this->danielsDog.breedName << std::endl;
 }
 
+struct GermanShepherdWrapper
+{
+    GermanShepherdWrapper(GermanShepherd* ptr): germanShepherd(ptr){}
+    ~GermanShepherdWrapper()
+    {
+        delete germanShepherd;
+    }
+
+    GermanShepherd* germanShepherd = nullptr;
+};
 /*
  new UDT 5:
  */
@@ -512,6 +562,8 @@ struct BayernMunich
     
     BayernMunich();
     ~BayernMunich();
+
+    JUCE_LEAK_DETECTOR(BayernMunich)
 };
 
 BayernMunich::BayernMunich()
@@ -545,6 +597,16 @@ void BayernMunich::printGermanTeam()
     std::cout << "BayernMunich " << this->germanTeam.starPlayer << std::endl;
 }
 
+struct BayernMunichWrapper
+{
+    BayernMunichWrapper(BayernMunich* ptr): bayernMunich(ptr){}
+    ~BayernMunichWrapper()
+    {
+        delete bayernMunich;
+    }
+
+    BayernMunich* bayernMunich = nullptr;
+};
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
  Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].
@@ -559,21 +621,21 @@ void BayernMunich::printGermanTeam()
 #include <iostream>
 int main()
 {
-    Car myBrothersCar;
-    auto brotherWinProbability = myBrothersCar.predictRaceWinProbability("Ford", 250);
+    CarWrapper myBrothersCar(new Car);
+    auto brotherWinProbability = myBrothersCar.car->predictRaceWinProbability("Ford", 250);
     std::cout << "Brother win probability " << brotherWinProbability << std::endl;
-    myBrothersCar.printPredictRaceWinProbability();
-    auto brothersCarSellValue = myBrothersCar.calculateTrueSellValue("Ford", 6000.75f, 100000);
+    myBrothersCar.car->printPredictRaceWinProbability();
+    auto brothersCarSellValue = myBrothersCar.car->calculateTrueSellValue("Ford", 6000.75f, 100000);
     std::cout << "True sell value of brothers car: $" << brothersCarSellValue << std::endl; 
-    myBrothersCar.printCalculateTrueSellValue();
-    myBrothersCar.calculateMilesUntilOilChange(1, 10000);
+    myBrothersCar.car->printCalculateTrueSellValue();
+    myBrothersCar.car->calculateMilesUntilOilChange(1, 10000);
 
-    Car mySistersCar;
-    auto sisterWinProbability = mySistersCar.predictRaceWinProbability("Dodge");
+    CarWrapper mySistersCar(new Car);
+    auto sisterWinProbability = mySistersCar.car->predictRaceWinProbability("Dodge");
     std::cout << "Sister win probability " << sisterWinProbability << std::endl;
-    auto sistersCarSellValue = mySistersCar.calculateTrueSellValue("Dodge", 5000.75f, 10000);
+    auto sistersCarSellValue = mySistersCar.car->calculateTrueSellValue("Dodge", 5000.75f, 10000);
     std::cout << "True sell value of sisters car: $" << sistersCarSellValue << std::endl; 
-    mySistersCar.calculateMilesUntilOilChange(2, 6734);
+    mySistersCar.car->calculateMilesUntilOilChange(2, 6734);
 
     Car::Vehicle myBrothersVehicle;
     myBrothersVehicle.renovateVehicle("1G5JFKASJ123122", 100, false);
@@ -588,33 +650,33 @@ int main()
     std::cout << sisterVehicleHorsepower << " HP" << std::endl;
     mySistersVehicle.resetEngineControlModule("1F34JFKASJ123122", false);
 
-    SoccerTeam spanishSoccerTeam;
-    spanishSoccerTeam.transferPlayerToTeam("PSG", "Barcelona");
-    auto spanishTeamWinProbability = spanishSoccerTeam.calculateWinProbability(4.56, 1);
+    SoccerTeamWrapper spanishSoccerTeam(new SoccerTeam);
+    spanishSoccerTeam.soccerTeam->transferPlayerToTeam("PSG", "Barcelona");
+    auto spanishTeamWinProbability = spanishSoccerTeam.soccerTeam->calculateWinProbability(4.56, 1);
     std::cout << spanishTeamWinProbability << " Win probability" << std::endl;
-    spanishSoccerTeam.printCalculateWinProbability();
-    spanishSoccerTeam.calculateTotalSeasonGoals(4, 130);
+    spanishSoccerTeam.soccerTeam->printCalculateWinProbability();
+    spanishSoccerTeam.soccerTeam->calculateTotalSeasonGoals(4, 130);
 
     SoccerTeam frenchSoccerTeam;
     frenchSoccerTeam.transferPlayerToTeam("Barcelona", "PSG");
     auto frenchTeamWinProbability = frenchSoccerTeam.calculateWinProbability(1.41, 3);
     std::cout << frenchTeamWinProbability << " Win probability" << std::endl;
-    spanishSoccerTeam.calculateTotalSeasonGoals(5, 210);
+    spanishSoccerTeam.soccerTeam->calculateTotalSeasonGoals(5, 210);
 
-    DogShow previousUSDogShow;
-    auto previousDogShowCost = previousUSDogShow.calculateCostToEnterDogShow();
+    DogShowWrapper previousUSDogShow(new DogShow);
+    auto previousDogShowCost = previousUSDogShow.dogShow->calculateCostToEnterDogShow();
     std::cout << "Previous US dog show cost " << previousDogShowCost << std::endl;
-    previousUSDogShow.printCalculateCostToEnterDogShow();
-    previousUSDogShow.predictWinProbabilityDogShow("Lab", 80, "brown");
-    auto previousDogShowEarnings = previousUSDogShow.calculateTotalEarningsDogShow(1000.37f);
+    previousUSDogShow.dogShow->printCalculateCostToEnterDogShow();
+    previousUSDogShow.dogShow->predictWinProbabilityDogShow("Lab", 80, "brown");
+    auto previousDogShowEarnings = previousUSDogShow.dogShow->calculateTotalEarningsDogShow(1000.37f);
     std::cout << "Previous US dog show earnings " << previousDogShowEarnings << std::endl;
-    previousUSDogShow.printCalculateTotalEarningsDogShow();
+    previousUSDogShow.dogShow->printCalculateTotalEarningsDogShow();
 
-    DogShow currentUSDogShow;
-    auto currentDogShowCost = currentUSDogShow.calculateCostToEnterDogShow(200);
+    DogShowWrapper currentUSDogShow(new DogShow);
+    auto currentDogShowCost = currentUSDogShow.dogShow->calculateCostToEnterDogShow(200);
     std::cout << "Current US dog show cost " << currentDogShowCost << std::endl;
-    currentUSDogShow.predictWinProbabilityDogShow("Mastiff", 100, "white");
-    auto currentDogShowEarnings = currentUSDogShow.calculateTotalEarningsDogShow(2001.55f);
+    currentUSDogShow.dogShow->predictWinProbabilityDogShow("Mastiff", 100, "white");
+    auto currentDogShowEarnings = currentUSDogShow.dogShow->calculateTotalEarningsDogShow(2001.55f);
     std::cout << "Current US dog show earnings " << currentDogShowEarnings << std::endl;
 
     DogShow::Animal cow;
@@ -631,25 +693,25 @@ int main()
     horse.determineAnimalHealth("horse");
 
 
-    GermanShepherd racingShepherd;
-    racingShepherd.calculateGermanShepherdEarnings(racingShepherd.danielsDog.calculateTotalEarningsDogShow(1000));
-    racingShepherd.danielsDog.weightInPounds = 300;
-    racingShepherd.finishObstacleCourse(racingShepherd.danielsDog.weightInPounds);
+    GermanShepherdWrapper racingShepherd(new GermanShepherd);
+    racingShepherd.germanShepherd->calculateGermanShepherdEarnings(racingShepherd.germanShepherd->danielsDog.calculateTotalEarningsDogShow(1000));
+    racingShepherd.germanShepherd->danielsDog.weightInPounds = 300;
+    racingShepherd.germanShepherd->finishObstacleCourse(racingShepherd.germanShepherd->danielsDog.weightInPounds);
 
-    GermanShepherd policeShepherd;
-    policeShepherd.calculateGermanShepherdEarnings(policeShepherd.danielsDog.calculateTotalEarningsDogShow(2000));
-    policeShepherd.finishObstacleCourse(policeShepherd.danielsDog.weightInPounds);
+    GermanShepherdWrapper policeShepherd(new GermanShepherd);
+    policeShepherd.germanShepherd->calculateGermanShepherdEarnings(policeShepherd.germanShepherd->danielsDog.calculateTotalEarningsDogShow(2000));
+    policeShepherd.germanShepherd->finishObstacleCourse(policeShepherd.germanShepherd->danielsDog.weightInPounds);
 
-    BayernMunich bayernMunichDivision1;
-    bayernMunichDivision1.germanTeam.starPlayer = "Mueller";
-    bayernMunichDivision1.germanTeam.numberOfPlayers = 9;
-    bayernMunichDivision1.performFreeKickFormation(bayernMunichDivision1.germanTeam.numberOfPlayers);
-    bayernMunichDivision1.celebrateGoal(bayernMunichDivision1.germanTeam.starPlayer);
+    BayernMunichWrapper bayernMunichDivision1(new BayernMunich);
+    bayernMunichDivision1.bayernMunich->germanTeam.starPlayer = "Mueller";
+    bayernMunichDivision1.bayernMunich->germanTeam.numberOfPlayers = 9;
+    bayernMunichDivision1.bayernMunich->performFreeKickFormation(bayernMunichDivision1.bayernMunich->germanTeam.numberOfPlayers);
+    bayernMunichDivision1.bayernMunich->celebrateGoal(bayernMunichDivision1.bayernMunich->germanTeam.starPlayer);
 
-    BayernMunich bayernMunichDivision2;
-    bayernMunichDivision2.germanTeam.starPlayer = "Ballack";
-    bayernMunichDivision2.performFreeKickFormation(bayernMunichDivision2.germanTeam.numberOfPlayers);
-    bayernMunichDivision2.celebrateGoal(bayernMunichDivision2.germanTeam.starPlayer);
+    BayernMunichWrapper bayernMunichDivision2(new BayernMunich);
+    bayernMunichDivision2.bayernMunich->germanTeam.starPlayer = "Ballack";
+    bayernMunichDivision2.bayernMunich->performFreeKickFormation(bayernMunichDivision2.bayernMunich->germanTeam.numberOfPlayers);
+    bayernMunichDivision2.bayernMunich->celebrateGoal(bayernMunichDivision2.bayernMunich->germanTeam.starPlayer);
     
     std::cout << "good to go!" << std::endl;
 }
