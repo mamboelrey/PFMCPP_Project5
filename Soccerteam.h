@@ -1,3 +1,4 @@
+#pragma once
 struct SoccerTeam
 {
     int numberOfPlayers = 11;

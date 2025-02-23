@@ -1,3 +1,4 @@
+#pragma once
 struct DogShow
 {
     std::string breedName = "Pitbull";

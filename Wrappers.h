@@ -1,3 +1,4 @@
+#pragma once
 struct SoccerTeamWrapper
 {
     SoccerTeamWrapper(SoccerTeam* ptr): soccerTeam(ptr){}

@@ -1,5 +1,4 @@
-#ifndef CAR_H
-#define CAR_H
+#pragma once
 struct Car
 {
     // 5 member variables
@@ -44,5 +43,3 @@ struct Car
     };
     JUCE_LEAK_DETECTOR(Car)
 };
-
-#endf CAR_H
